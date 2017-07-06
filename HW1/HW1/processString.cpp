@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
-
+#include <ctype.h>
 #include <gtest\gtest.h>
 
 using namespace std;
@@ -16,11 +16,48 @@ using namespace std;
 //       -1 if exception occur (ex. string containing non-digit character)
 int getAscendingStr(string& inputStr)
 {
-	
 	/// Please fill your code here
+	int i = 0, j = 0, Array_Num = 0, temp = 0;
+	int alpha_Flag = 0;
+	int num[10] = {};
+	char *pEnd = NULL;
+	const char *pStart = inputStr.c_str();
+	string *str = &inputStr;
 
+	/// detected alpha in string///
+	for (string::iterator it = (*str).begin(); it != (*str).end(); ++it) {
+		if (isalpha(*it))
+			alpha_Flag = 1;
+	}
 
-	return 0;
+	/// convert string -> integer
+	while (alpha_Flag == 0) {
+		num[Array_Num] = strtol(pStart, &pEnd, 10);
+		if (pStart == pEnd)
+			break;
+		else
+			pStart = pEnd;
+		Array_Num++;
+	}
+
+	//// Bubble Sort ////
+	for (i = 0; i < Array_Num && alpha_Flag == 0; i++) {
+		for (j = i; j < Array_Num; j++) {
+			temp = num[i];
+			if (temp >= num[j])
+				swap(num[i], num[j]);
+		}
+	}
+
+	//// Stored the result /////
+	if (alpha_Flag == 0) {
+		*str = to_string(num[0]);
+		for (i = 1; i < Array_Num; i++)
+			*str = *str + " " + to_string(num[i]);
+		return 0;
+	}
+	else
+		return -1;
 }
 
 // solveQ Function requirement
@@ -36,12 +73,30 @@ int getAscendingStr(string& inputStr)
 //          (return vector size should be 0)
 int solveQ(vector<double> &x, double a, double b, double c)
 {
+	float delta = pow(b, 2) - 4 * a * c;
+	vector<double> *sol = &x;
 
-	return 0;
+	if (delta > 0) { // condition : b^2-4ac > 0
+		(*sol).push_back((-b + sqrt(delta)) / (2 * a));
+		(*sol).push_back((-b - sqrt(delta)) / (2 * a));
+		printf("%f, %f, %d\n", (*sol).at(0), (*sol).at(1), (*sol).size());
+		return 1;
+	}
+	else if (delta == 0) {// condition : b^2-4ac == 0
+		(*sol).push_back((-b) / (2 * a));
+		printf("%f, %d\n", (*sol).at(0), (*sol).size());
+		return 0;
+	}
+	else {// condition : b^2-4ac < 0
+		(*sol).clear();
+		printf("%d\n", (*sol).size());
+		return -1;
+	}
+
 }
 
 int main(int argc, char*argv[]) {
-	
+
 	testing::InitGoogleTest(&argc, argv);
 	RUN_ALL_TESTS();
 	system("pause");
