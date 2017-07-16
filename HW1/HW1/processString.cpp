@@ -22,10 +22,9 @@ int getAscendingStr(string& inputStr)
 	vector<int> num;
 	char *pEnd = NULL;
 	const char *pStart = inputStr.c_str();
-	string *str = &inputStr;
 
 	/// detected alpha in string///
-	for (string::iterator it = (*str).begin(); it != (*str).end(); ++it) {
+	for (string::iterator it = inputStr.begin(); it != inputStr.end(); ++it) {
 		if (isalpha(*it))
 			alpha_Flag = 1;
 	}
@@ -51,9 +50,9 @@ int getAscendingStr(string& inputStr)
 
 	//// Stored the result /////
 	if (alpha_Flag == 0) {
-		*str = to_string(num[0]);
+		inputStr = to_string(num[0]);
 		for (i = 1; i < Array_Num; i++)
-			*str = *str + " " + to_string(num.at(i));
+			inputStr = inputStr + " " + to_string(num.at(i));
 		return 0;
 	}
 	else
@@ -74,22 +73,21 @@ int getAscendingStr(string& inputStr)
 int solveQ(vector<double> &x, double a, double b, double c)
 {
 	float delta = pow(b, 2) - 4 * a * c;
-	vector<double> *sol = &x;
 
 	if (delta > 0) { // condition : b^2-4ac > 0
-		(*sol).push_back((-b + sqrt(delta)) / (2 * a));
-		(*sol).push_back((-b - sqrt(delta)) / (2 * a));
-		printf("%f, %f, %d\n", (*sol).at(0), (*sol).at(1), (*sol).size());
+		x.push_back((-b + sqrt(delta)) / (2 * a));
+		x.push_back((-b - sqrt(delta)) / (2 * a));
+		printf("%f, %f, %d\n", x.at(0), x.at(1), x.size());
 		return 1;
 	}
 	else if (delta == 0) {// condition : b^2-4ac == 0
-		(*sol).push_back((-b) / (2 * a));
-		printf("%f, %d\n", (*sol).at(0), (*sol).size());
+		x.push_back((-b) / (2 * a));
+		printf("%f, %d\n", x.at(0), x.size());
 		return 0;
 	}
 	else {// condition : b^2-4ac < 0
-		(*sol).clear();
-		printf("%d\n", (*sol).size());
+		x.clear();
+		printf("%d\n", x.size());
 		return -1;
 	}
 
