@@ -19,7 +19,7 @@ int getAscendingStr(string& inputStr)
 	/// Please fill your code here
 	int i = 0, j = 0, Array_Num = 0, temp = 0;
 	int alpha_Flag = 0;
-	int num[10] = {};
+	vector<int> num;
 	char *pEnd = NULL;
 	const char *pStart = inputStr.c_str();
 	string *str = &inputStr;
@@ -32,7 +32,7 @@ int getAscendingStr(string& inputStr)
 
 	/// convert string -> integer
 	while (alpha_Flag == 0) {
-		num[Array_Num] = strtol(pStart, &pEnd, 10);
+		num.push_back(strtol(pStart, &pEnd, 10));
 		if (pStart == pEnd)
 			break;
 		else
@@ -43,9 +43,9 @@ int getAscendingStr(string& inputStr)
 	//// Bubble Sort ////
 	for (i = 0; i < Array_Num && alpha_Flag == 0; i++) {
 		for (j = i; j < Array_Num; j++) {
-			temp = num[i];
-			if (temp >= num[j])
-				swap(num[i], num[j]);
+			temp = num.at(i);
+			if (temp >= num.at(j))
+				swap(num.at(i), num.at(j));
 		}
 	}
 
@@ -53,7 +53,7 @@ int getAscendingStr(string& inputStr)
 	if (alpha_Flag == 0) {
 		*str = to_string(num[0]);
 		for (i = 1; i < Array_Num; i++)
-			*str = *str + " " + to_string(num[i]);
+			*str = *str + " " + to_string(num.at(i));
 		return 0;
 	}
 	else
