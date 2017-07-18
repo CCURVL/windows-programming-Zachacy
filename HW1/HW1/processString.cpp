@@ -3,7 +3,6 @@
 #include <vector>
 #include <ctype.h>
 #include <gtest\gtest.h>
-
 using namespace std;
 
 
@@ -22,13 +21,11 @@ int getAscendingStr(string& inputStr)
 	vector<int> num;
 	char *pEnd = NULL;
 	const char *pStart = inputStr.c_str();
-
 	/// detected alpha in string///
 	for (string::iterator it = inputStr.begin(); it != inputStr.end(); ++it) {
 		if (isalpha(*it))
 			alpha_Flag = 1;
 	}
-
 	/// convert string -> integer
 	while (alpha_Flag == 0) {
 		num.push_back(strtol(pStart, &pEnd, 10));
@@ -38,16 +35,9 @@ int getAscendingStr(string& inputStr)
 			pStart = pEnd;
 		Array_Num++;
 	}
-
 	//// Bubble Sort ////
-	for (i = 0; i < Array_Num && alpha_Flag == 0; i++) {
-		for (j = i; j < Array_Num; j++) {
-			temp = num.at(i);
-			if (temp >= num.at(j))
-				swap(num.at(i), num.at(j));
-		}
-	}
-
+	if(alpha_Flag == 0)
+		sort(num.begin(),num.end()-1);
 	//// Stored the result /////
 	if (alpha_Flag == 0) {
 		inputStr = to_string(num[0]);
